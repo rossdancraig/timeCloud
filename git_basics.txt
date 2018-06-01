@@ -1,0 +1,94 @@
+#Updated: My project's README
+
+
+#Basic Git Instructions
+
+#Background for more info: https://danielkummer.github.io/git-flow-cheatsheet/
+
+#1) Creating a new feature
+In Windows, type this in command line to enter into bash mode (Unix env): 
+wget -q -O - --no-check-certificate https://raw.github.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh install stable | bash
+
+If you do not have git installed, 3rd party git software can be downloaded from this site: https://git-scm.com/downloads 
+
+If this is your first time using the repository you'll need to clone the 
+directory onto your local commputer first. This just downloads all the 
+content that we have saved on the cetral server to your local machine:
+
+git clone https://github.com/rossdancraig/timeCloud/invitations
+
+for example: 
+
+git clone https://github.com/rossdancraig/timeCloud/invitations 
+
+or
+
+git clone https://AdamCharron@bitbucket.org/crossdan/baller_boys.git
+
+
+Whenever you start a new work session on the directory, first ensure that 
+you have the latest version of the project by going to the main directory 
+($YOUR_PATH/baller_boys/) and typing (you will need to enter your 
+password you created on bitbucket when prompted):
+
+git pull
+
+To start a new feature, type:
+
+git flow feature start MYFEATURE
+Ex: git flow feature start hack-a-shack
+
+This will create a new branch in the repository called "feature/MYFEATURE"
+and change your current branch to that one.
+
+#2) Making changes
+Check to make sure you're on the right branch by typing:
+git branch
+
+Btw, you can switch branches you're on by typing:
+git checkout BRANCH_NAME
+
+Edit/add files in the baller_boys directory on your local machine as you 
+normally would. To check your progress on this branch since your last commit,
+type:
+
+git status
+
+
+#3) Committing changes
+When ready to commit, 
+To add files to commit, type:
+
+git add FILE_NAME
+
+or simply go to the top directory and type:
+
+git add .
+
+to add all the files that have been changed/added since the last commit.
+After that, type:
+
+git commit -m "Message explaining changes since last event"
+
+Note: If this is your first time using git, you need to initialize your
+user email info. Type:
+
+git config --global user.email "rossdan.craig@gmail.com"
+
+The commit command "saves" the last changes onto your local machine but 
+doesn't upload them to the shared repository yet for others to see. By 
+the way, if you make a big mistake and need to revert to the last pull, type:
+
+git reset --hard
+
+Now is where things get tricky since theoretically everyone makes changes at 
+once and people creating different versions at the same time get tricky.
+For simplicitly, we'll just assume everyone is working on separate branches
+individually and therefore we won't need to worry about that. To push type:
+
+git push origin feature/MYFEATURE
+
+And yea, that's pretty much it. There's more things like closing the features
+for nice tidy up but this is a short project so once again to keep things
+simple we won't worry about that.
+
