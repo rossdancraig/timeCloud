@@ -2,7 +2,7 @@
 Django-based website and Android app to record and visualise 
 how users spend their time.
 
-#Setup
+# Setup
 1) First make sure you have Python and pip3 installed:
 ```
 sudo apt-get update
