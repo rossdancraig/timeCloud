@@ -16,6 +16,7 @@ python --version
 pip3 --version 
 ```
 
+
 2) Create a virtual environment to keep consistent environment
 variables and tool versions:
 ```
@@ -23,6 +24,7 @@ sudo apt install virtualenv
 virtualenv --python=\`which python3\` [VIRTUAL_ENV_NAME]
 ```
 To get out of virtualenv simply type `deactivate` in terminal.
+
 
 3) Once inside your virtualenv, install Django (web framework) and 
 Postgres (database mananger) and Python packages:
