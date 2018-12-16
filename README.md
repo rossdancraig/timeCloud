@@ -22,6 +22,7 @@ variables and tool versions:
 ```
 sudo apt install virtualenv
 virtualenv --python=\`which python3\` [VIRTUAL_ENV_NAME]
+source [VIRTUAL_ENV_NAME]/bin/activate
 ```
 To get out of virtualenv simply type `deactivate` in terminal.
 
@@ -32,9 +33,8 @@ Postgres (database mananger) and Python packages:
 
 ```
 sudo apt-get install postgresql libpq-dev postgresql-client postgresql-client-common postgresql-contrib
-sudo pip3 install psycopg2
-sudo pip3 install psycopg2-binary
-sudo pip3 install Django
+pip install psycopg2 psycopg2-binary
+pip install Django
 ```
 Check that Django was installed correctly:
-`python3 -m django --version`
+`python -m django --version`
