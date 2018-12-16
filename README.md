@@ -37,4 +37,11 @@ pip install psycopg2 psycopg2-binary
 pip install Django
 ```
 Check that Django was installed correctly:
-`python -m django --version`
+```
+python -m django --version
+```
+
+## Creating a Project
+```
+django-admin startproject [PROJECT_NAME]
+```
