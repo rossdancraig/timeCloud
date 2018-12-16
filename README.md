@@ -21,7 +21,7 @@ pip3 --version
 variables and tool versions:
 ```
 sudo apt install virtualenv
-virtualenv --python=\`which python3\` [VIRTUAL_ENV_NAME]
+virtualenv --python=`which python3` [VIRTUAL_ENV_NAME]
 source [VIRTUAL_ENV_NAME]/bin/activate
 ```
 To get out of virtualenv simply type `deactivate` in terminal.
