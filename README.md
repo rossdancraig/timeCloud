@@ -2,7 +2,7 @@
 Django-based website and Android app to record and visualise 
 how users spend their time.
 
-## Setup
+## Installing Tools and Packages
 1) First make sure you have Python and pip3 installed:
 ```
 sudo apt-get update
@@ -41,7 +41,34 @@ Check that Django was installed correctly:
 python -m django --version
 ```
 
-## Creating a Project
+## Configuring a new App and Database
+The following is a summary of steps taken from the 
+[Official Django Beginner Tutorial](https://docs.djangoproject.com/en/2.1/intro/).
+Be sure to first enter into your virtual environment from earlier.
+
 ```
 django-admin startproject [PROJECT_NAME]
 ```
+
+From the `PROJECT_NAME` dir you can run `python manage.py runserver` and view the 
+result on your browser (see terminal result for instructions).
+
+
+
+```
+python manage.py startapp [APP_NAME]
+```
+
+[Configure Postgres and create a database](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-DATABASES)
+[Configure the  `PROJECT_NAME/settings.py`](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-DATABASES) 
+file to use this database and update `TIME_ZONE` (ex: `America/Toronto`)
+Also add this line to the `INSTALLED_APPS` paths 
+(see `APP_NAME/apps.py` file for exact auto-generated Config class name):
+```
+'APP_NAME.apps.AppNameConfig',
+```
+
+```
+python manage.py migrate
+```
+
