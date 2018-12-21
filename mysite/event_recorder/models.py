@@ -31,17 +31,18 @@ class Category(models.Model):
         Rail Train        | Inter-City Travel
         Bicycling         | Intra-City Travel
   '''
-  name = models.CharField(max_length=100)
+  name = models.CharField(max_length=100, unique=False,
+          null=False, blank=False) 
   #on_delete for parent attribute handled by category_post_delete_handler
   #Since Django's default behaviour is transactions aren't committed until
   #a request is completed, the post_delete handler will override on_delete
   parent = models.ForeignKey('self', null=True, on_delete=models.SET_NULL) 
 
   def __str__(self):
-    return 'Name: {}; Parent: {}'.format(self.name, str(self.parent))
+    return self.name
   
   class Meta:
-    ordering = ('parent', 'name')
+    ordering = ('name', )#, 'name')
 
 @receiver(models.signals.post_delete, sender=Category,
           dispatch_uid='string id for event category delete')
@@ -54,7 +55,8 @@ def category_post_delete_handler(sender, instance, **kwargs):
 
 class Relation(models.Model):
   ''' Relation categories for Person model. '''
-  name = models.CharField('Relationship Category', max_length = 50)
+  name = models.CharField('Relationship Category', max_length = 50, 
+          blank=False, null=False)
 
   def __str__(self):
     return self.name
@@ -71,21 +73,22 @@ class GenderChoices(Enum):
 
 class Person(models.Model):
   ''' Person with whom we can share an event experience. '''
-  first_name = models.CharField(max_length =50)
+  first_name = models.CharField(max_length =50,
+                blank=False, null=False)
   last_name = models.CharField(max_length = 50, blank=True)
   relations = models.ManyToManyField(Relation)
   approx_DOB = models.DateTimeField(null = True, blank=True)
-  gender = models.CharField(max_length = 5, 
-            #x is stored in database, x.value is human-readable
+  gender = models.CharField(max_length = 1, 
+            #x.name is stored in database, x.value is human-readable
             choices = [(x.name, x.value) for x in GenderChoices],
-            null=True
+            null=True,
           )
 
   def __str__(self):
     return self.first_name + ' ' + self.last_name
   
   def getAge(self):
-    if approx_DOB:
+    if self.approx_DOB:
       return ((timezone.now() - self.approx_DOB).days)//365
     else:
       return -1
@@ -98,21 +101,24 @@ class Event(models.Model):
   '''
   Basic event details including start time, end time, description. 
   Also includes two many-to-many relations with Category and Person.
+  Finally, includes a notes section in case you want to write about
+  the event more in detail (max about 200 words).
   '''
   start_time = models.DateTimeField()
   end_time = models.DateTimeField()
-  description = models.CharField(max_length = 200)
+  description = models.CharField(max_length = 200, blank=True)
   categories = models.ManyToManyField(Category)
-  people = models.ManyToManyField(Person, blank=True)
+  people = models.ManyToManyField(Person)
+  notes = models.CharField(max_length = 1000, blank=True)
 
   def __str__(self):
-    return 'Event {}: '.format(str(self.id), self.description)
+    return '{}: {}'.format(str(self.id), self.description)
   
   def duration(self):
-    return self.end - self.start #returns datetime.timedelta object
+    return self.end_time - self.start_time #datetime.timedelta object
   
   def is_solo_event(self):
-    return not self.people
+    return self.people.get_queryset().count() == 0
   is_solo_event.admin_order_field = 'people'
   is_solo_event.boolean = True
   is_solo_event.short_description = 'Alone?'
@@ -127,15 +133,16 @@ class Value(models.Model):
   for simplicity and also the fact that ratings usually aren't essential
   info.
   '''
-  event = models.OneToOneField(Event, on_delete = models.CASCADE) 
+  event = models.OneToOneField(Event, null=False,
+            on_delete = models.CASCADE) 
   enjoyment = models.PositiveSmallIntegerField(
                 'Enjoyment Rating', blank=True, null=True) #rating/10
   productivity = models.PositiveSmallIntegerField(
                 'Productivity Rating', blank=True, null=True) #rating/10
   
   def __str__(self):
-    return self.event.description + ': ' + str(self.enjoyment) + '; ' + \
-      str(self.productivity)
+    return '{} ({}) - {} - {}'.format(str(self.event.id), 
+      self.event.description, str(self.enjoyment), str(self.productivity))
 
   def overall_rating(self):
     total_score, denom = 0, 0
