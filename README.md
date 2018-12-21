@@ -73,6 +73,7 @@ python manage.py migrate
 ```
 
 ## Models and Migrations
+### Models
 The `mysite/event_recorder/models.py` file includes the following models:
 
 * Category([ID], name, parent)
@@ -81,5 +82,29 @@ The `mysite/event_recorder/models.py` file includes the following models:
 * Event([ID], start, end, description, categories, people)
 * Value([ID], event, enjoyment, productivity)
 
-After making check
+### Migrations
+At each update to the model, run updates onto Django migration edit files, then migrate
+them to the databse:
+```
+python manage.py makemigrations event_recorder
+python manage.py sqlmigrate event_recorder [NUMBER]
+python manage.py migrate
+```
+
+The second command doesn't make any actual changes it's just optional if you want
+to check what the SQL command code would look like in updating the database.
+
+## Admin
+Create a bunch of model instances and save it onto your database by
+entering `python manage.py shell`. 
+
+Create a superuser:
+```
+python manage.py createsuperuser
+Username: [ADMIN_NAME]
+Email address: [ADMIN_EMAIL]
+Password: [ADMIN_PASSWORD]
+```
+
+Add models to `[APP_NAME]/admin.py`
 

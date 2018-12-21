@@ -39,10 +39,10 @@ class Category(models.Model):
   parent = models.ForeignKey('self', null=True, on_delete=models.SET_NULL) 
 
   def __str__(self):
-    return self.name
+    return '{}-{}'.format(self.id, self.name)
   
   class Meta:
-    ordering = ('name', )#, 'name')
+    ordering = ('name',)#, 'name')
 
 @receiver(models.signals.post_delete, sender=Category,
           dispatch_uid='string id for event category delete')
@@ -105,7 +105,7 @@ class Event(models.Model):
   the event more in detail (max about 200 words).
   '''
   start_time = models.DateTimeField()
-  end_time = models.DateTimeField()
+  end_time = models.DateTimeField(null=True)
   description = models.CharField(max_length = 200, blank=True)
   categories = models.ManyToManyField(Category)
   people = models.ManyToManyField(Person)
@@ -115,7 +115,8 @@ class Event(models.Model):
     return '{}: {}'.format(str(self.id), self.description)
   
   def duration(self):
-    return self.end_time - self.start_time #datetime.timedelta object
+    end = self.end_time if self.end_time else timezone.now()
+    return end - self.start_time #datetime.timedelta object
   
   def is_solo_event(self):
     return self.people.get_queryset().count() == 0
