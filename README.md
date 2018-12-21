@@ -72,3 +72,10 @@ Also add this line to the `INSTALLED_APPS` paths
 python manage.py migrate
 ```
 
+## Creating Models
+Category([ID], name, parent)
+Relation([ID], name)
+Person([ID], first_name, last_name, relations, approx_DOB, gender)
+Event([ID], start, end, description, categories, people)
+Value([ID], event, enjoyment, productivity)
+
