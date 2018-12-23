@@ -37,6 +37,20 @@ class EventDetailView(generic.DetailView):
     Excludes any questions that aren't published yet.
     """
     return Event.objects.filter(start_time__lte=timezone.now())
+
+class CategoryIndexView(generic.ListView):
+  model = Category
+  template_name = 'categories/index.html'
+  context_object_name = 'categories_list'
+  
+  def get_queryset(self):
+    ''' Get all categories.'''
+    return Category.objects.all()
+
+class CategoryDetailView(generic.DetailView):
+  model = Category
+  template_name = 'categories/detail.html'
+
 '''
 class ResultsView(generic.DetailView):
   model = Question

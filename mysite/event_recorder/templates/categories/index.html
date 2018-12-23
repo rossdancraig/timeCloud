@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+<h1> Categories </h1>
+
+{% if categories_list %}
+  <table id='categories_index_table'>
+    <tr>
+      <th>Category Name</th>
+      <th>Parent Category</th>
+    </tr>
+    {% for category in categories_list %}
+      <tr>
+        <td>
+          <a href=
+            "{% url 'event_recorder:category-detail' category.id %}">
+          {{ category.name }}</a></td>
+        <td> 
+          Test
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>No categories are defined.</p>
+{% endif %}

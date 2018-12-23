@@ -42,7 +42,7 @@ class Category(models.Model):
     return '{}-{}'.format(self.id, self.name)
   
   class Meta:
-    ordering = ('name',)#, 'name')
+    ordering = [models.F('parent').asc(nulls_first=True)]#, 'name')
 
 @receiver(models.signals.post_delete, sender=Category,
           dispatch_uid='string id for event category delete')

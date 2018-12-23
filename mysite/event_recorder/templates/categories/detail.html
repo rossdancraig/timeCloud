@@ -1,0 +1,9 @@
+<h1> {{ event.description }}</h1>
+
+{% if error_message %}
+  <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<p><strong> Event id: </strong> {{ event.id }}</p>
+<p><strong> Start Time: </strong> {{ event.start_time }}</p>
+<p><strong> End Time: </strong> {{ event.end_time }}</p>
