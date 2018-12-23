@@ -8,7 +8,7 @@ urlpatterns = [
   path('events/', views.EventIndexView, name='events-index'),
   path('events/<int:pk>/', views.EventDetailView.as_view(), 
         name='event-detail'),
-  path('categories/', views.CategoryIndexView.as_view(), 
+  path('categories/', views.CategoryIndexView,
         name='categories-index'),
   path('categories/<int:pk>/', views.CategoryDetailView.as_view(), 
         name='category-detail'),

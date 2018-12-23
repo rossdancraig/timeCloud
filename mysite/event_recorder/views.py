@@ -38,14 +38,19 @@ class EventDetailView(generic.DetailView):
     """
     return Event.objects.filter(start_time__lte=timezone.now())
 
-class CategoryIndexView(generic.ListView):
-  model = Category
-  template_name = 'categories/index.html'
-  context_object_name = 'categories_list'
-  
-  def get_queryset(self):
-    ''' Get all categories.'''
-    return Category.objects.all()
+def CategoryIndexView(request, *args, **kwargs):
+  print(args, kwargs)
+  print(request.user)
+  context = {'categories_list': []}
+  categories = Category.objects.all()
+  for category in categories:
+    category_info = [category]
+    if hasattr(category, 'parent'):
+      category_info.append(category.parent)
+    else:
+      category_info.append('')
+    context['categories_list'].append(category_info)
+  return render(request, 'categories/index.html', context)
 
 class CategoryDetailView(generic.DetailView):
   model = Category

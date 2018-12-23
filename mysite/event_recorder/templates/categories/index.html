@@ -11,14 +11,19 @@
       <th>Category Name</th>
       <th>Parent Category</th>
     </tr>
-    {% for category in categories_list %}
+    {% for category, parent in categories_list %}
       <tr>
         <td>
           <a href=
             "{% url 'event_recorder:category-detail' category.id %}">
-          {{ category.name }}</a></td>
+          {{ category.name }}</a>
+        </td>
         <td> 
-          Test
+          {% if parent %}
+            <a href=
+              "{% url 'event_recorder:category-detail' parent.id %}">
+            {{ parent.name }}</a>
+          {% endif %}
         </td>
       </tr>
     {% endfor %}
