@@ -61,6 +61,9 @@ class Relation(models.Model):
   def __str__(self):
     return self.name
 
+  class Meta:
+    ordering = ('name',)
+
 
 class GenderChoices(Enum):
   M = 'Male'

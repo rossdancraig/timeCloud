@@ -1,0 +1,25 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+<h1> Personal Relations </h1>
+
+{% if relations_list %}
+  <table id='relations_index_table'>
+    <tr>
+      <th>Name</th>
+    {% for relation in relations_list %}
+      <tr>
+        <td>
+          <a href=
+            "{% url 'event_recorder:relation-detail' relation.id %}">
+            {{ relation.name}}
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>No relations are defined.</p>
+{% endif %}
