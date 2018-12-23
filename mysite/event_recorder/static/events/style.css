@@ -1,0 +1,16 @@
+/*
+body {
+    background: white url("images/background.gif") no-repeat;
+}
+*/
+
+li a {
+    color: yellow;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+  border-collapse: collapse;
+}
+

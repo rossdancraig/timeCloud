@@ -1,0 +1,47 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+<h1> Events </h1>
+
+{% if events_list %}
+  <table id='events_index_table'>
+    <tr>
+      <th>Description</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Categories</th>
+      <th>People</td>
+      <th>Overall Rating</td>
+    </tr>
+    {% for event, categories, people, overall_rating in events_list %}
+      <tr>
+        <td><a href="{% url 'event_recorder:event-detail' event.id %}">
+          {{ event.description }}</a></td>
+        <td> {{ event.start_time }}</td>
+        {% if event.end_time > now %}
+          <td> Present </td>
+        {% else %}
+          <td> {{ event.end_time }}</td>
+        {% endif %}
+        <td> 
+          {% for category in categories%}
+            <p>{{ category.name }}</p>
+          {% endfor %}
+        </td>
+        <td>
+          {% for person in people %}
+            <p> {{ person.first_name }} {{person.last_name }} </p>
+          {% endfor %}
+        </td>
+        <td>
+            <p> {{ overall_rating }} </p>
+        </td>
+
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>No events are available.</p>
+{% endif %}

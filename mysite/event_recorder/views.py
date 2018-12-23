@@ -4,31 +4,40 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic 
 
-from .models import Question, Choice
+from .models import Category, Event, Person, Relation, Value
 
 class IndexView(generic.ListView):
-  template_name = 'polls/index.html'
-  context_object_name = 'latest_question_list'
+  template_name = 'main/index.html'
+  context_object_name = 'main_page'
 
   def get_queryset(self):
-    """
-    Return the last five published questions (not including those set to be
-    published in the future).
-    """
-    return Question.objects.filter(
-              pub_date__lte=timezone.now()
-            ).order_by('-pub_date')[:5]
+    return None
 
-class DetailView(generic.DetailView):
-  model = Question
-  template_name = 'polls/detail.html'
+def EventIndexView(request, *args, **kwargs):
+  print(args, kwargs)
+  print(request.user)
+  context = {'events_list': []}
+  events = Event.objects.all()
+  for event in events:
+    event_info = [event, (event.categories.all()), 
+                  (event.people.all())]
+    if hasattr(event, 'value'):
+      event_info.append((event.value.overall_rating()))
+    else:
+      event_info.append('')
+    context['events_list'].append(event_info)
+  return render(request, 'events/index.html', context)
+
+class EventDetailView(generic.DetailView):
+  model = Event
+  template_name = 'events/detail.html'
 
   def get_queryset(self):
     """
     Excludes any questions that aren't published yet.
     """
-    return Question.objects.filter(pub_date__lte=timezone.now())
-
+    return Event.objects.filter(start_time__lte=timezone.now())
+'''
 class ResultsView(generic.DetailView):
   model = Question
   template_name = 'polls/results.html'
@@ -64,3 +73,4 @@ def vote(request, question_id):
     # user hits the Back button.
     return HttpResponseRedirect(reverse('polls:results', \
             args=(question.id,)))
+'''
