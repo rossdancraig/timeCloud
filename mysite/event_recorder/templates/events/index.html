@@ -13,12 +13,13 @@
       <th>End Time</th>
       <th>
         <a href="{% url 'event_recorder:categories-index' %}">
-            Categories</a>
+            Categories
+        </a>
       </th>
       <th>People</td>
-      <th>Overall Rating</td>
+      <th>Overall Rating (/10)</td>
     </tr>
-    {% for event, categories, people, overall_rating in events_list %}
+    {% for event in events_list %}
       <tr>
         <td><a href="{% url 'event_recorder:event-detail' event.id %}">
           {{ event.description }}</a></td>
@@ -29,17 +30,23 @@
           <td> {{ event.end_time }}</td>
         {% endif %}
         <td> 
-          {% for category in categories%}
-            <p>{{ category.name }}</p>
+          {% for category in event.categories.all %}
+            <a href="{% url 'event_recorder:category-detail' category.id %}">
+                <p> {{ category.name }} </p>
+            </a>
           {% endfor %}
         </td>
         <td>
-          {% for person in people %}
+          {% for person in event.people.all %}
             <p> {{ person.first_name }} {{person.last_name }} </p>
           {% endfor %}
         </td>
         <td>
-            <p> {{ overall_rating }} </p>
+          {% if event.value %}
+            <p> {{ event.value.overall_rating }} </p>
+          {% endif %}
+
+          <p> {{ overall_rating }} </p>
         </td>
 
       </tr>

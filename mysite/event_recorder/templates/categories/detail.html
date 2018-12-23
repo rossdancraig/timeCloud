@@ -1,9 +1,78 @@
-<h1> {{ event.description }}</h1>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+<h1> {{ category.name }}</h1>
 
 {% if error_message %}
   <p><strong>{{ error_message }}</strong></p>
 {% endif %}
 
-<p><strong> Event id: </strong> {{ event.id }}</p>
-<p><strong> Start Time: </strong> {{ event.start_time }}</p>
-<p><strong> End Time: </strong> {{ event.end_time }}</p>
+<p><strong> Category id: </strong> {{ category.id }}</p>
+
+<p><strong> Parent: </strong> 
+  {% if category.parent %}
+    <a href= "{% url 'event_recorder:category-detail' category.parent.id %}">
+      {{category.parent.name}}
+    </a>
+  {% endif %}
+</p>
+
+<p><strong> Children: </strong> 
+  {% for child in category.category_set.all %}
+    <a href= "{% url 'event_recorder:category-detail' child.id %}">
+      {{child.name}}
+    </a>
+    ,  
+  {% endfor %}
+</p>
+
+<h2> Associated Events </h2>
+<table id='events_index_table'>
+  <tr>
+    <th>Description</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>
+      <a href="{% url 'event_recorder:categories-index' %}">
+          Categories</a>
+    </th>
+    <th>People</td>
+    <th>Overall Rating</td>
+  </tr>
+  {% for event in category.event_set.all %}
+    <tr>
+      <td><a href="{% url 'event_recorder:event-detail' event.id %}">
+        {{ event.description }}</a></td>
+      <td> {{ event.start_time }}</td>
+      {% if event.end_time > now %}
+        <td> Present </td>
+      {% else %}
+        <td> {{ event.end_time }}</td>
+      {% endif %}
+      <td> 
+        {% for category in event.categories.all %}
+            <a href="{% url 'event_recorder:category-detail' category.id %}">
+                <p> {{ category.name }} </p>
+            </a>
+        {% endfor %}
+      </td>
+      <td>
+        {% for person in event.people.all %}
+          <p> {{ person.first_name }} {{person.last_name }} </p>
+        {% endfor %}
+      </td>
+      <td>
+        {% if event.value %}
+          <p> {{ event.value.overall_rating }} </p>
+        {% endif %}
+      </td>
+
+    </tr>
+  {% endfor %}
+</table>
+
+
+
+

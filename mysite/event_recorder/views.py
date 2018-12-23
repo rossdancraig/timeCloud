@@ -19,13 +19,7 @@ def EventIndexView(request, *args, **kwargs):
   context = {'events_list': []}
   events = Event.objects.all()
   for event in events:
-    event_info = [event, (event.categories.all()), 
-                  (event.people.all())]
-    if hasattr(event, 'value'):
-      event_info.append((event.value.overall_rating()))
-    else:
-      event_info.append('')
-    context['events_list'].append(event_info)
+    context['events_list'].append(event)
   return render(request, 'events/index.html', context)
 
 class EventDetailView(generic.DetailView):
@@ -55,6 +49,16 @@ def CategoryIndexView(request, *args, **kwargs):
 class CategoryDetailView(generic.DetailView):
   model = Category
   template_name = 'categories/detail.html'
+
+#  def get_context_data(self, **kwargs):
+#    ''' Get category's parent and children explicitly.'''
+#    context = super().get_context_data(**kwargs)
+#    context['parent'] = Category.parent
+#    context['children'] = Category.category_set.all()
+#    children = category.category_set.all()
+#    for child in children:
+#      context['children'].append(child)
+#    return context
 
 '''
 class ResultsView(generic.DetailView):
