@@ -13,10 +13,14 @@
       <th>End Time</th>
       <th>
         <a href="{% url 'event_recorder:categories-index' %}">
-            Categories
+          Categories
         </a>
       </th>
-      <th>People</td>
+      <th>
+        <a href="{% url 'event_recorder:people-index' %}">
+          People
+        </a>
+      </th>
       <th>Overall Rating (/10)</td>
     </tr>
     {% for event in events_list %}

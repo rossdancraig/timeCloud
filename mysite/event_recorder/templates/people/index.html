@@ -1,0 +1,51 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+<h1> People </h1>
+
+{% if people_list %}
+  <table id='people_index_table'>
+    <tr>
+      <th>Name</th>
+      <th>  
+        <a href="{% url 'event_recorder:relations-index' %}">
+          Relations
+        </a>
+      </th>
+      <th>Approx Age</th>
+      <th>Gender</th>
+    </tr>
+    {% for person in people_list %}
+      <tr>
+        <td>
+          <a href=
+            "{% url 'event_recorder:person-detail' person.id %}">
+            {{ person.first_name }} {{person.last_name}}
+          </a>
+        </td>
+        <td> 
+          {% for relation in person.relations.all %}
+            <a href=
+              "{% url 'event_recorder:relation-detail' relation.id %}">
+              {{ relation.name }}
+            </a>
+          {% endfor %}
+        </td>
+        <td>
+          {% if person.approx_DOB %}
+            {{ person.getAge  }}
+          {% endif %}
+        </td>
+        <td>
+          {% if person.gender %}
+            {{ person.gender }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>No people are defined.</p>
+{% endif %}

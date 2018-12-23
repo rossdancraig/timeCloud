@@ -11,7 +11,7 @@
       <th>Category Name</th>
       <th>Parent Category</th>
     </tr>
-    {% for category, parent in categories_list %}
+    {% for category in categories_list %}
       <tr>
         <td>
           <a href=
@@ -19,10 +19,10 @@
           {{ category.name }}</a>
         </td>
         <td> 
-          {% if parent %}
+          {% if category.parent %}
             <a href=
-              "{% url 'event_recorder:category-detail' parent.id %}">
-            {{ parent.name }}</a>
+              "{% url 'event_recorder:category-detail' category.parent.id %}">
+            {{ category.parent.name }}</a>
           {% endif %}
         </td>
       </tr>

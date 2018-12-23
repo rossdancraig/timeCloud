@@ -7,29 +7,35 @@
   <p><strong>{{ error_message }}</strong></p>
 {% endif %}
 
-<h1> {{ category.name }} </h1>
+<h1> {{ person.first_name }} {{person.last_name}} </h1>
 
-<p><strong> Category id: </strong> {{ category.id }}</p>
+<p><strong> Person id: </strong> {{ person.id }}</p>
+<p><strong> First Name: </strong> {{ person.first_name }}</p>
+<p><strong> Last Name: </strong> {{ person.last_name }}</p>
 
-<p><strong> Parent: </strong> 
-  {% if category.parent %}
-    <a href= "{% url 'event_recorder:category-detail' category.parent.id %}">
-      {{category.parent.name}}
-    </a>
-  {% endif %}
-</p>
-
-<p><strong> Children: </strong> 
-  {% for child in category.category_set.all %}
-    <a href= "{% url 'event_recorder:category-detail' child.id %}">
-      {{child.name}}
+<p><strong> Relations: </strong> 
+  {% for relation in person.relations.all %}
+    <a href= "{% url 'event_recorder:relation-detail' relation.id %}">
+      {{relation.name}}
     </a>
     ,  
   {% endfor %}
 </p>
 
+<p><strong>Approx Age: </strong> 
+  {% if person.approx_DOB %}
+    {{ person.getAge }}
+  {% endif %}
+</p>
+
+<p><strong>Gender: </strong> 
+  {% if person.gender %}
+    {{ person.gender }}
+  {% endif %}
+</p>
+
 <h2> Associated Events </h2>
-<table id='category_associated_events_table'>
+<table id='person_associated_events_table'>
   <tr>
     <th>Description</th>
     <th>Start Time</th>
@@ -41,7 +47,7 @@
     <th>People</td>
     <th>Overall Rating</td>
   </tr>
-  {% for event in category.event_set.all %}
+  {% for event in person.event_set.all %}
     <tr>
       <td><a href="{% url 'event_recorder:event-detail' event.id %}">
         {{ event.description }}</a></td>

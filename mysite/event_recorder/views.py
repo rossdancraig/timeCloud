@@ -13,14 +13,10 @@ class IndexView(generic.ListView):
   def get_queryset(self):
     return None
 
-def EventIndexView(request, *args, **kwargs):
-  print(args, kwargs)
-  print(request.user)
-  context = {'events_list': []}
-  events = Event.objects.all()
-  for event in events:
-    context['events_list'].append(event)
-  return render(request, 'events/index.html', context)
+class EventIndexView(generic.ListView):
+  model = Event
+  context_object_name = 'events_list'
+  template_name = 'events/index.html'
 
 class EventDetailView(generic.DetailView):
   model = Event
@@ -32,34 +28,32 @@ class EventDetailView(generic.DetailView):
     """
     return Event.objects.filter(start_time__lte=timezone.now())
 
-def CategoryIndexView(request, *args, **kwargs):
-  print(args, kwargs)
-  print(request.user)
-  context = {'categories_list': []}
-  categories = Category.objects.all()
-  for category in categories:
-    category_info = [category]
-    if hasattr(category, 'parent'):
-      category_info.append(category.parent)
-    else:
-      category_info.append('')
-    context['categories_list'].append(category_info)
-  return render(request, 'categories/index.html', context)
+class CategoryIndexView(generic.ListView):
+  model = Category
+  template_name = 'categories/index.html'
+  context_object_name = 'categories_list'
 
 class CategoryDetailView(generic.DetailView):
   model = Category
   template_name = 'categories/detail.html'
 
-#  def get_context_data(self, **kwargs):
-#    ''' Get category's parent and children explicitly.'''
-#    context = super().get_context_data(**kwargs)
-#    context['parent'] = Category.parent
-#    context['children'] = Category.category_set.all()
-#    children = category.category_set.all()
-#    for child in children:
-#      context['children'].append(child)
-#    return context
+class PersonIndexView(generic.ListView):
+  model = Person
+  template_name = 'people/index.html'
+  context_object_name = 'people_list'
 
+class PersonDetailView(generic.DetailView):
+  model = Person
+  template_name = 'people/detail.html'
+
+class RelationIndexView(generic.ListView):
+  model = Relation
+  template_name = 'relations/index.html'
+  context_object_name = 'relations_list'
+
+class RelationDetailView(generic.DetailView):
+  model = Relation
+  template_name = 'relations/detail.html'
 '''
 class ResultsView(generic.DetailView):
   model = Question
