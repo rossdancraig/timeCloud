@@ -131,11 +131,11 @@ class Event(models.Model):
     ordering = ('-end_time', '-start_time')
 
 
-class Value(models.Model):
+class Rating(models.Model):
   '''
   All the ratings (/10) associated with an event. Separate table
-  for simplicity and also the fact that ratings usually aren't essential
-  info.
+  for simplicity and also the fact that people usually just care
+  about the overall rating instead of individual scores.
   '''
   event = models.OneToOneField(Event, null=False,
             on_delete = models.CASCADE) 

@@ -21,7 +21,11 @@
           People
         </a>
       </th>
-      <th>Overall Rating (/10)</td>
+      <th>
+        <a href="{% url 'event_recorder:ratings-index' %}">
+          Overall Rating (/10)
+        </a>
+      </th>
     </tr>
     {% for event in events_list %}
       <tr>
@@ -36,21 +40,21 @@
         <td> 
           {% for category in event.categories.all %}
             <a href="{% url 'event_recorder:category-detail' category.id %}">
-                <p> {{ category.name }} </p>
+              <p> {{ category.name }} </p>
             </a>
           {% endfor %}
         </td>
         <td>
           {% for person in event.people.all %}
-            <p> {{ person.first_name }} {{person.last_name }} </p>
+            <a href="{% url 'event_recorder:person-detail' person.id %}">
+              <p> {{ person.first_name }} {{person.last_name}} </p>
+            </a>
           {% endfor %}
         </td>
         <td>
-          {% if event.value %}
-            <p> {{ event.value.overall_rating }} </p>
+          {% if event.rating %}
+            <p> {{ event.rating.overall_rating }} </p>
           {% endif %}
-
-          <p> {{ overall_rating }} </p>
         </td>
 
       </tr>

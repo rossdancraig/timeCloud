@@ -3,7 +3,6 @@ from . import views
 
 app_name = 'event_recorder'
 urlpatterns = [
-#  path('', views.IndexView.as_view(), name='index'),
   path('', views.IndexView.as_view(), name='index'),
   path('events/', views.EventIndexView.as_view(), name='events-index'),
   path('events/<int:pk>/', views.EventDetailView.as_view(), 
@@ -20,6 +19,8 @@ urlpatterns = [
         name='relations-index'),
   path('relations/<int:pk>/', views.RelationDetailView.as_view(), 
         name='relation-detail'),
-#  path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
-#  path('<int:question_id>/vote/', views.vote, name='vote'),
+  path('ratings/', views.RatingIndexView.as_view(),
+        name='ratings-index'),
+  path('ratings/<int:pk>/', views.RatingDetailView.as_view(), 
+        name='ratings-detail'),
 ]

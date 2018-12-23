@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic 
 
-from .models import Category, Event, Person, Relation, Value
+from .models import Category, Event, Person, Relation, Rating
 
 class IndexView(generic.ListView):
   template_name = 'main/index.html'
@@ -17,16 +17,15 @@ class EventIndexView(generic.ListView):
   model = Event
   context_object_name = 'events_list'
   template_name = 'events/index.html'
+  
+  def get_queryset(self):
+    ''' Excludes any events that haven't started yet. '''
+    return Event.objects.filter(start_time__lte=timezone.now())
+
 
 class EventDetailView(generic.DetailView):
   model = Event
   template_name = 'events/detail.html'
-
-  def get_queryset(self):
-    """
-    Excludes any questions that aren't published yet.
-    """
-    return Event.objects.filter(start_time__lte=timezone.now())
 
 class CategoryIndexView(generic.ListView):
   model = Category
@@ -54,6 +53,16 @@ class RelationIndexView(generic.ListView):
 class RelationDetailView(generic.DetailView):
   model = Relation
   template_name = 'relations/detail.html'
+
+class RatingIndexView(generic.ListView):
+  model = Rating
+  template_name = 'ratings/index.html'
+  context_object_name = 'ratings_list'
+
+class RatingDetailView(generic.DetailView):
+  model = Rating
+  template_name = 'ratings/detail.html'
+
 '''
 class ResultsView(generic.DetailView):
   model = Question

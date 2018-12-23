@@ -1,0 +1,49 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+<h1> Ratings </h1>
+
+{% if ratings_list %}
+  <table id='ratings_index_table'>
+    <tr>
+      <th>Event id</th>
+      <th>Event Description</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Enjoyment</th>
+      <th>Productivity</th>
+      <th>Overall</th>
+    {% for rating in ratings_list %}
+      <tr>
+        <td>{{rating.event.id}}</td>
+        <td>
+          <a href=
+            "{% url 'event_recorder:event-detail' rating.event.id %}">
+            {{ rating.event.description}}
+          </a>
+        </td>
+        <td>{{ rating.event.start_time}}</td>
+        <td>{{ rating.event.end_time}}</td>
+        <td>
+          {% if rating.enjoyment %}
+            {{ rating.enjoyment}}
+          {% endif %}
+        </td>
+        <td>
+          {% if rating.productivity %}
+            {{ rating.productivity}}
+          {% endif %}
+        </td>
+        <td>
+          {% if rating.overall_rating %}
+            {{ rating.overall_rating }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>No ratings are defined.</p>
+{% endif %}
