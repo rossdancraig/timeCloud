@@ -5,6 +5,9 @@
 
 <h1> Events </h1>
 
+<a href="{% url 'event_recorder:event-create' %}"> Add New </a>
+<p></p>
+
 {% if events_list %}
   <table id='events_index_table'>
     <tr>
@@ -32,11 +35,13 @@
         <td><a href="{% url 'event_recorder:event-detail' event.id %}">
           {{ event.description }}</a></td>
         <td> {{ event.start_time }}</td>
-        {% if event.end_time > now %}
-          <td> Present </td>
-        {% else %}
-          <td> {{ event.end_time }}</td>
-        {% endif %}
+        <td>
+          {% if event.current_event %}
+            <center>Present</center> 
+          {% else %}
+            {{ event.end_time }}
+          {% endif %}
+        </td>
         <td> 
           {% for category in event.categories.all %}
             <a href="{% url 'event_recorder:category-detail' category.id %}">
@@ -56,7 +61,6 @@
             <p> {{ event.rating.overall_rating }} </p>
           {% endif %}
         </td>
-
       </tr>
     {% endfor %}
   </table>

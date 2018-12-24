@@ -4,6 +4,9 @@
   <p><strong>{{ error_message }}</strong></p>
 {% endif %}
 
+<a href="{% url 'event_recorder:events-index' %}"> All Events </a>
+<p></p>
+
 <p><strong> Event id: </strong> {{ event.id }}</p>
 <p><strong> Start Time: </strong> {{ event.start_time }}</p>
 <p><strong> End Time: </strong> {{ event.end_time }}</p>

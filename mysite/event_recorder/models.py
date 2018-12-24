@@ -4,6 +4,7 @@ from enum import Enum
 from django.db import models
 from django.dispatch.dispatcher import receiver
 from django.utils import timezone
+from django.urls import reverse
 #from django.db.models.signals import post_delete
 
  
@@ -12,7 +13,7 @@ from django.utils import timezone
 Category([ID], name, parent)
 Relation([ID], name)
 Person([ID], first_name, last_name, relations, approx_DOB, gender)
-Event([ID], start, end, description, categories, people)
+Event([ID], start_time, end_time, description, categories, people)
 Value([ID], event, enjoyment, productivity)
 '''
 
@@ -100,6 +101,10 @@ class Person(models.Model):
     ordering = ('first_name', 'last_name')
 
 
+def oneTimeChunkAgo(n=60):
+  ''' Gets datetime object of n-minutes past from now --> default=1hr '''
+  return timezone.now() - timezone.timedelta(minutes=n)
+
 class Event(models.Model):
   '''
   Basic event details including start time, end time, description. 
@@ -107,12 +112,15 @@ class Event(models.Model):
   Finally, includes a notes section in case you want to write about
   the event more in detail (max about 200 words).
   '''
-  start_time = models.DateTimeField()
-  end_time = models.DateTimeField(null=True)
-  description = models.CharField(max_length = 200, blank=True)
+  start_time = models.DateTimeField(default=oneTimeChunkAgo())
+  end_time = models.DateTimeField(default=timezone.now, null=True)
+  description = models.CharField(max_length = 200, blank=False)
   categories = models.ManyToManyField(Category)
   people = models.ManyToManyField(Person)
-  notes = models.CharField(max_length = 1000, blank=True)
+  notes = models.CharField(max_length = 1000, default='', blank=True)
+  
+  def get_absolute_url(self):
+    return reverse('event_recorder:event-detail', kwargs={'pk': self.id})
 
   def __str__(self):
     return '{}: {}'.format(str(self.id), self.description)
@@ -126,6 +134,9 @@ class Event(models.Model):
   is_solo_event.admin_order_field = 'people'
   is_solo_event.boolean = True
   is_solo_event.short_description = 'Alone?'
+
+  def current_event(self):
+    return not self.end_time or self.end_time > timezone.now()
 
   class Meta:
     ordering = ('-end_time', '-start_time')

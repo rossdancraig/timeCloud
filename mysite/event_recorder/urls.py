@@ -4,9 +4,12 @@ from . import views
 app_name = 'event_recorder'
 urlpatterns = [
   path('', views.IndexView.as_view(), name='index'),
-  path('events/', views.EventIndexView.as_view(), name='events-index'),
+  path('events/', views.EventIndexView.as_view(), 
+        name='events-index'),
   path('events/<int:pk>/', views.EventDetailView.as_view(), 
         name='event-detail'),
+  path('events/create/', views.EventCreateView.as_view(), 
+        name='event-create'),
   path('categories/', views.CategoryIndexView.as_view(),
         name='categories-index'),
   path('categories/<int:pk>/', views.CategoryDetailView.as_view(), 

@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.views import generic 
 
 from .models import Category, Event, Person, Relation, Rating
+from .forms import EventForm
 
 class IndexView(generic.ListView):
   template_name = 'main/index.html'
@@ -22,10 +23,18 @@ class EventIndexView(generic.ListView):
     ''' Excludes any events that haven't started yet. '''
     return Event.objects.filter(start_time__lte=timezone.now())
 
-
 class EventDetailView(generic.DetailView):
   model = Event
   template_name = 'events/detail.html'
+ 
+class EventCreateView(generic.CreateView):
+  model = Event
+  form_class = EventForm
+  template_name = 'events/create.html'
+
+  def form_valid(self, form):
+    print(form.cleaned_data)
+    return super().form_valid(form)
 
 class CategoryIndexView(generic.ListView):
   model = Category
