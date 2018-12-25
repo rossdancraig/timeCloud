@@ -49,3 +49,16 @@ class PersonForm(forms.ModelForm):
   
     self.fields['gender'].required = False
     self.fields['approx_DOB'].required = False
+
+
+class RelationForm(forms.ModelForm):
+  class Meta:
+    model = Relation
+    fields = ['name']
+
+#  def __init__(self, *args, **kwargs):
+#    
+#    super(CategoryForm, self).__init__(*args, **kwargs)
+#    
+#    self.fields['parent'].required = False
+

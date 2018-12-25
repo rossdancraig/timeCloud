@@ -9,6 +9,13 @@
 
 <h1> {{ relation.name }} </h1>
 
+<a href="{% url 'event_recorder:relations-index' %}"> All Relations </a>
+<p></p>
+<a href="{% url 'event_recorder:relation-update' relation.id %}"> Update Relation </a>
+<p></p>
+<a href="{% url 'event_recorder:relation-delete' relation.id %}"> Delete Relation </a>
+<p></p>
+
 <p><strong> Relation id: </strong> {{ relation.id }}</p>
 <p><strong> Name: </strong> {{ relation.name }}</p>
 
@@ -34,10 +41,12 @@
       </td>
       <td> 
         {% for relation in person.relations.all %}
-          <a href=
-            "{% url 'event_recorder:relation-detail' relation.id %}">
-            {{ relation.name }}
-          </a>
+          <p>
+            <a href=
+              "{% url 'event_recorder:relation-detail' relation.id %}">
+              {{ relation.name }}
+            </a>
+          </p>
         {% endfor %}
       </td>
       <td>

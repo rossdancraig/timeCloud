@@ -42,6 +42,13 @@ urlpatterns = [
         name='relations-index'),
   path('relations/<int:pk>/', views.RelationDetailView.as_view(), 
         name='relation-detail'),
+  path('relations/create/', views.RelationCreateView.as_view(), 
+        name='relation-create'),
+  path('relations/<int:pk>/update/', views.RelationUpdateView.as_view(), 
+        name='relation-update'),
+  path('relations/<int:pk>/delete/', views.RelationDeleteView.as_view(), 
+        name='relation-delete'),
+
   path('ratings/', views.RatingIndexView.as_view(),
         name='ratings-index'),
   path('ratings/<int:pk>/', views.RatingDetailView.as_view(), 

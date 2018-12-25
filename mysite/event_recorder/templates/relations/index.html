@@ -5,6 +5,9 @@
 
 <h1> Personal Relations </h1>
 
+<a href="{% url 'event_recorder:relation-create' %}"> Add New </a>
+<p></p>
+
 {% if relations_list %}
   <table id='relations_index_table'>
     <tr>

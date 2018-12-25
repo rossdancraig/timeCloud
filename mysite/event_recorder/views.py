@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.views import generic 
 
 from .models import Category, Event, Person, Relation, Rating
-from .forms import EventForm, CategoryForm, PersonForm
+from .forms import EventForm, CategoryForm, PersonForm, RelationForm
 
 class IndexView(generic.ListView):
   template_name = 'main/index.html'
@@ -156,6 +156,28 @@ class RelationDetailView(generic.DetailView):
   model = Relation
   template_name = 'relations/detail.html'
 
+class RelationCreateView(generic.CreateView):
+  model = Relation
+  form_class = RelationForm
+  template_name = 'relations/create.html'
+
+class RelationUpdateView(generic.UpdateView):
+  model = Relation
+  form_class = RelationForm 
+  template_name = 'relations/update.html'
+
+  def get_object(self, queryset=None):
+    obj = Relation.objects.get(pk=self.kwargs['pk'])
+    return obj
+
+class RelationDeleteView(generic.DeleteView):
+  model = Relation
+  template_name = 'relations/delete.html'
+
+  def get_success_url(self):
+    return reverse('event_recorder:relations-index')
+
+#Rating Views
 class RatingIndexView(generic.ListView):
   model = Rating
   template_name = 'ratings/index.html'
