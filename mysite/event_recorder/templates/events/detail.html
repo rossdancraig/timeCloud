@@ -6,6 +6,10 @@
 
 <a href="{% url 'event_recorder:events-index' %}"> All Events </a>
 <p></p>
+<a href="{% url 'event_recorder:event-update' event.id %}"> Update Event </a>
+<p></p>
+<a href="{% url 'event_recorder:event-delete' event.id %}"> Delete Event </a>
+<p></p>
 
 <p><strong> Event id: </strong> {{ event.id }}</p>
 <p><strong> Start Time: </strong> {{ event.start_time }}</p>

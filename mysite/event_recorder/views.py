@@ -36,6 +36,30 @@ class EventCreateView(generic.CreateView):
     print(form.cleaned_data)
     return super().form_valid(form)
 
+class EventUpdateView(generic.UpdateView):
+  model = Event
+  form_class = EventForm 
+  template_name = 'events/update.html'
+
+  def get_object(self, queryset=None):
+    obj = Event.objects.get(pk=self.kwargs['pk'])
+    return obj
+
+  def form_valid(self, form):
+    print(form.cleaned_data)
+    return super().form_valid(form)
+
+class EventDeleteView(generic.DeleteView):
+  model = Event
+  template_name = 'events/delete.html'
+
+  def get_object(self, queryset=None):
+    obj = Event.objects.get(pk=self.kwargs['pk'])
+    return obj
+  
+  def get_success_url(self):
+    return reverse('event_recorder:events-index')
+
 class CategoryIndexView(generic.ListView):
   model = Category
   template_name = 'categories/index.html'

@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+
+<form action='.' method='POST'> {% csrf_token %}
+  <h1>Do you want to delete the event "{{ event.description }}"?</h1>
+  <p>
+    <input type='submit' value='Yes'/> 
+    <a href="{% url 'event_recorder:event-detail' event.id %}">Cancel</a> 
+  </p>
+</form>
