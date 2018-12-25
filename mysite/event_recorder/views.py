@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.views import generic 
 
 from .models import Category, Event, Person, Relation, Rating
-from .forms import EventForm
+from .forms import EventForm, CategoryForm, PersonForm
 
 class IndexView(generic.ListView):
   template_name = 'main/index.html'
@@ -14,6 +14,7 @@ class IndexView(generic.ListView):
   def get_queryset(self):
     return None
 
+#Event views
 class EventIndexView(generic.ListView):
   model = Event
   context_object_name = 'events_list'
@@ -60,6 +61,7 @@ class EventDeleteView(generic.DeleteView):
   def get_success_url(self):
     return reverse('event_recorder:events-index')
 
+#Category views
 class CategoryIndexView(generic.ListView):
   model = Category
   template_name = 'categories/index.html'
@@ -68,6 +70,40 @@ class CategoryIndexView(generic.ListView):
 class CategoryDetailView(generic.DetailView):
   model = Category
   template_name = 'categories/detail.html'
+
+class CategoryCreateView(generic.CreateView):
+  model = Category
+  form_class = CategoryForm
+  template_name = 'categories/create.html'
+
+  def form_valid(self, form):
+    print(form.cleaned_data)
+    return super().form_valid(form)
+
+class CategoryUpdateView(generic.UpdateView):
+  model = Category
+  form_class = CategoryForm 
+  template_name = 'categories/update.html'
+
+  def get_object(self, queryset=None):
+    obj = Category.objects.get(pk=self.kwargs['pk'])
+    return obj
+
+  def form_valid(self, form):
+    print(form.cleaned_data)
+    return super().form_valid(form)
+
+class CategoryDeleteView(generic.DeleteView):
+  model = Category
+  template_name = 'categories/delete.html'
+
+  def get_object(self, queryset=None):
+    obj = Category.objects.get(pk=self.kwargs['pk'])
+    return obj
+  
+  def get_success_url(self):
+    return reverse('event_recorder:categories-index')
+
 
 class PersonIndexView(generic.ListView):
   model = Person

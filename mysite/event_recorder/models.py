@@ -39,6 +39,9 @@ class Category(models.Model):
   #a request is completed, the post_delete handler will override on_delete
   parent = models.ForeignKey('self', null=True, on_delete=models.SET_NULL) 
 
+  def get_absolute_url(self):
+    return reverse('event_recorder:category-detail', kwargs={'pk': self.id})
+
   def __str__(self):
     return '{}-{}'.format(self.id, self.name)
   
@@ -58,6 +61,9 @@ class Relation(models.Model):
   ''' Relation categories for Person model. '''
   name = models.CharField('Relationship Category', max_length = 50, 
           blank=False, null=False)
+
+  def get_absolute_url(self):
+    return reverse('event_recorder:relation-detail', kwargs={'pk': self.id})
 
   def __str__(self):
     return self.name
@@ -87,6 +93,9 @@ class Person(models.Model):
             choices = [(x.name, x.value) for x in GenderChoices],
             null=True,
           )
+
+  def get_absolute_url(self):
+    return reverse('event_recorder:person-detail', kwargs={'pk': self.id})
 
   def __str__(self):
     return self.first_name + ' ' + self.last_name
@@ -154,6 +163,9 @@ class Rating(models.Model):
                 'Enjoyment Rating', blank=True, null=True) #rating/10
   productivity = models.PositiveSmallIntegerField(
                 'Productivity Rating', blank=True, null=True) #rating/10
+
+  def get_absolute_url(self):
+    return reverse('event_recorder:rating-detail', kwargs={'pk': self.id})
   
   def __str__(self):
     return '{} ({}) - {} - {}'.format(str(self.event.id), 

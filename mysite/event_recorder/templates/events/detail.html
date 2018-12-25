@@ -14,3 +14,19 @@
 <p><strong> Event id: </strong> {{ event.id }}</p>
 <p><strong> Start Time: </strong> {{ event.start_time }}</p>
 <p><strong> End Time: </strong> {{ event.end_time }}</p>
+
+<p><strong>Categories:</strong>
+  {% for category in event.categories.all %}
+    <a href="{% url 'event_recorder:category-detail' category.id %}">
+    {{ category.name }},
+    </a>
+  {% endfor %}
+</p>
+
+<p><strong>People:</strong>
+  {% for person in event.people.all %}
+    <a href="{% url 'event_recorder:person-detail' person.id %}">
+    {{ person.first_name }} {{person.last_name}},
+    </a>
+  {% endfor %}
+</p>

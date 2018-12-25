@@ -5,6 +5,9 @@
 
 <h1> Categories </h1>
 
+<a href="{% url 'event_recorder:category-create' %}"> Add New </a>
+<p></p>
+
 {% if categories_list %}
   <table id='categories_index_table'>
     <tr>

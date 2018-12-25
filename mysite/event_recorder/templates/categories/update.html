@@ -3,12 +3,12 @@
 <link rel="stylesheet" type="text/css" 
   href="{% static 'events/style.css' %}">
 
-<h1> Create New Event </h1>
+<h1> Update Category </h1>
 
 <form action='.' method='POST'> {% csrf_token %}
   {{ form.as_p }}
   <p>
     <input type='submit' value='Save'/>
-    <a href="{% url 'event_recorder:events-index' %}">Cancel</a> 
+    <a href="{% url 'event_recorder:category-detail' category.id %}">Cancel</a> 
   </p>
 </form>

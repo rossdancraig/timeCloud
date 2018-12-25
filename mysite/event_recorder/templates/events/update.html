@@ -7,5 +7,8 @@
 
 <form action='.' method='POST'> {% csrf_token %}
   {{ form.as_p }}
-  <input type='submit' value='Save'/>
+  <p>
+    <input type='submit' value='Save'/>
+    <a href="{% url 'event_recorder:event-detail' event.id %}">Cancel</a> 
+  </p>
 </form>

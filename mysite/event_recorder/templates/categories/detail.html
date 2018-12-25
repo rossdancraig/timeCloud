@@ -9,6 +9,13 @@
 
 <h1> {{ category.name }} </h1>
 
+<a href="{% url 'event_recorder:categories-index' %}"> All Categories </a>
+<p></p>
+<a href="{% url 'event_recorder:category-update' category.id %}"> Update Category </a>
+<p></p>
+<a href="{% url 'event_recorder:category-delete' category.id %}"> Delete Category </a>
+<p></p>
+
 <p><strong> Category id: </strong> {{ category.id }}</p>
 
 <p><strong> Parent: </strong> 
