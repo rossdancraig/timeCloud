@@ -1,0 +1,14 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" 
+  href="{% static 'events/style.css' %}">
+
+<h1> Create New Person </h1>
+
+<form action='.' method='POST'> {% csrf_token %}
+  {{ form.as_p }}
+  <p>
+    <input type='submit' value='Save'/>
+    <a href="{% url 'event_recorder:people-index' %}">Cancel</a> 
+  </p>
+</form>

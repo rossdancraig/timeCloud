@@ -9,6 +9,13 @@
 
 <h1> {{ person.first_name }} {{person.last_name}} </h1>
 
+<a href="{% url 'event_recorder:people-index' %}"> All People </a>
+<p></p>
+<a href="{% url 'event_recorder:person-update' person.id %}"> Update Person </a>
+<p></p>
+<a href="{% url 'event_recorder:person-delete' person.id %}"> Delete Person </a>
+<p></p>
+
 <p><strong> Person id: </strong> {{ person.id }}</p>
 <p><strong> First Name: </strong> {{ person.first_name }}</p>
 <p><strong> Last Name: </strong> {{ person.last_name }}</p>

@@ -104,7 +104,7 @@ class CategoryDeleteView(generic.DeleteView):
   def get_success_url(self):
     return reverse('event_recorder:categories-index')
 
-
+#Person views
 class PersonIndexView(generic.ListView):
   model = Person
   template_name = 'people/index.html'
@@ -113,6 +113,39 @@ class PersonIndexView(generic.ListView):
 class PersonDetailView(generic.DetailView):
   model = Person
   template_name = 'people/detail.html'
+
+class PersonCreateView(generic.CreateView):
+  model = Person
+  form_class = PersonForm
+  template_name = 'people/create.html'
+
+  def form_valid(self, form):
+    print(form.cleaned_data)
+    return super().form_valid(form)
+
+class PersonUpdateView(generic.UpdateView):
+  model = Person
+  form_class = PersonForm 
+  template_name = 'people/update.html'
+
+  def get_object(self, queryset=None):
+    obj = Person.objects.get(pk=self.kwargs['pk'])
+    return obj
+
+  def form_valid(self, form):
+    print(form.cleaned_data)
+    return super().form_valid(form)
+
+class PersonDeleteView(generic.DeleteView):
+  model = Person
+  template_name = 'people/delete.html'
+
+  def get_object(self, queryset=None):
+    obj = Person.objects.get(pk=self.kwargs['pk'])
+    return obj
+  
+  def get_success_url(self):
+    return reverse('event_recorder:people-index')
 
 class RelationIndexView(generic.ListView):
   model = Relation

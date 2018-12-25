@@ -47,6 +47,5 @@ class PersonForm(forms.ModelForm):
     self.fields['relations'].queryset = Relation.objects.all()
     self.fields['relations'].required = False
   
-    self.fields['gender'].widget = forms.widgets.CheckboxInput()
     self.fields['gender'].required = False
     self.fields['approx_DOB'].required = False

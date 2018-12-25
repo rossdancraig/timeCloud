@@ -5,6 +5,9 @@
 
 <h1> People </h1>
 
+<a href="{% url 'event_recorder:person-create' %}"> Add New </a>
+<p></p>
+
 {% if people_list %}
   <table id='people_index_table'>
     <tr>

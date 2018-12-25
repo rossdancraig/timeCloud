@@ -27,11 +27,17 @@ urlpatterns = [
   path('categories/<int:pk>/delete/', views.CategoryDeleteView.as_view(), 
         name='category-delete'),
 
-
   path('people/', views.PersonIndexView.as_view(),
         name='people-index'),
   path('people/<int:pk>/', views.PersonDetailView.as_view(), 
         name='person-detail'),
+  path('people/create/', views.PersonCreateView.as_view(), 
+        name='person-create'),
+  path('people/<int:pk>/update/', views.PersonUpdateView.as_view(), 
+        name='person-update'),
+  path('people/<int:pk>/delete/', views.PersonDeleteView.as_view(), 
+        name='person-delete'),
+
   path('relations/', views.RelationIndexView.as_view(),
         name='relations-index'),
   path('relations/<int:pk>/', views.RelationDetailView.as_view(), 
