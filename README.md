@@ -3,6 +3,7 @@ Django-based website and Android app to record and visualise
 how users spend their time.
 
 ## Installing Tools and Packages
+### Backend
 1) First make sure you have Python and pip3 installed:
 ```
 sudo apt-get update
@@ -10,6 +11,7 @@ sudo apt-get install python3.6
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 sudo apt-get -y install python3-pip
 ```
+
 Verify that they were installed correctly:
 ```
 python --version 
@@ -36,10 +38,18 @@ sudo apt-get install postgresql libpq-dev postgresql-client postgresql-client-co
 pip install psycopg2 psycopg2-binary
 pip install Django
 ```
+
 Check that Django was installed correctly:
 ```
 python -m django --version
 ```
+
+### Front-End
+4) Install node, npm and Java so we can use Angular 
+**IMPORTANT:** Make sure to download *Angular* (version 2) and not
+Angularjs. 
+
+Full instructions [here](https://angular.io/guide/quickstart). 
 
 ## Configuring a new App and Database
 The following is a summary of steps taken from the 
